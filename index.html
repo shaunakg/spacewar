@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html><!--
+  Copyright (C) 2007,2016 by Jef Poskanzer <jef@mail.acme.com> and srg {srg.id.au}wd
+  All rights reserved.
+  --><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="./assets/styles.css">
+    <style type="text/css">
+      .info {
+        position: absolute;
+        right: 20px;
+        bottom: 20px;
+        border: 2px outset #99cc99;
+        background-color: #99cc99;
+        color: #000000;
+        padding: 20px;
+      }
+    </style>
+    <title>Space War</title>
+
+  </head>
+
+
+  <body style="width: 100%; height: 100%; margin: 0; padding: 0; overflow: hidden;" onload="Load();" data-new-gr-c-s-check-loaded="14.1012.0" data-gr-ext-installed="">
+
+    <canvas id="canvas" style="background-color: #000000; position: absolute; top: 0; left: 0; right: 0; bottom: 0; width: 100%; height: 100%; margin: 0; padding: 0; overflow: hidden;" width="1536" height="730">
+      Your browser does not support the HTML5 Canvas element.
+    </canvas>
+
+    <div class="info" id="infoClosed" onclick="InfoOpen();" style="padding: 0px; cursor: pointer;">?</div>
+
+    <div id="block" style="position: absolute; inset: 0px; width: 100%; height: 100%; margin: 0px; padding: 0px; overflow: hidden; background-color: rgb(128, 128, 128); opacity: 0.5; display: none;"></div>
+    <div class="info" id="infoOpen" style="z-index: 1; width: 25em; display: none;">
+      <h3 style="text-align: center;">Space War</h3>
+      <p>
+        Use the left/right/up arrow keys to move and the space bar to fire.
+      </p>
+
+      <button onclick="InfoClose()" id=start>Start game</button>
+
+      <p>
+        This version of "Space War" was originally created by Jef Poskanzer (<a href="//acme.com">ACME Labs</a>) and has been edited a little to make it more fun. Enjoy :)<br/>
+
+        <br/>
+        <code>Press CTRL+L to toggle actions log.</code>
+      </p>
+    </div>
+
+    <div class="log" id="logBlock">
+      <b>SpaceWar actions log (<a href="#" id=dllog>Download</a>) </b><br/><br/>
+      <pre id=log>[No actions currently in record]</pre>
+    </div>
+
+    <script>
+        document.body.onkeydown = (e) => {
+          if (e.ctrlKey && e.key == "l") {
+            document.getElementById("logBlock").style.display = (document.getElementById("logBlock").style.display == "block") ? "none":"block";
+            alert("Log window has appeared in the bottom left, hover to reveal.")
+            e.preventDefault();
+          }
+        }
+
+        document.getElementById("dllog").onclick = () => {
+
+          const objectURL = URL.createObjectURL(new Blob([ document.getElementById("log").innerText ], {
+            type: "text/plain"
+          }));
+
+          const l = document.createElement("a");
+          l.href = objectURL;
+          l.download = `spacewar-log-${new Date().getTime()}.txt`;
+          l.click();
+
+        }
+    </script>
+
+    <script src="./assets/acme.namespace.jsm"></script>
+    <script src="./assets/acme.utils.jsm"></script>
+    <script src="./assets/spacewar.jsm"></script>
+
+  
+
+
+</body></html>

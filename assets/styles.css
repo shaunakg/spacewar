@@ -1,0 +1,97 @@
+body { background-color: #99cc99; font-family: sans-serif; }
+
+form { border-width: 0; margin: 0; }
+blockquote { margin-top: 0; margin-bottom: 0; }
+pre { margin-top: 0; margin-bottom: 0; }
+input { border-width: 1px; }
+
+hr { border-style: outset; }
+hr.thick { height: 10px; background-color: #cccc99; border-color: #cccc99; border-width: 2px; }
+hr.short { width: 10em; }
+
+img.logo { float: right; padding: 5px; }
+img.framed { box-shadow: 3px 3px 2px black; padding: 0px; }
+img.mailto { border: 0px; }
+
+/* * { box-sizing: border-box; } */
+
+@media screen and (max-device-width: 400px) {
+    img {
+	max-width: 95%;
+	height: auto;
+    }
+}
+
+
+div.log {
+
+    display: none;
+
+    position: absolute;
+    z-index: 999;
+
+    bottom: 20px;
+    left: 10px;
+    background-color: gray;
+
+    padding: 20px;
+
+    max-height: 30vh;
+    /* max-width: 33vw; */
+
+    opacity: 0.1;
+
+}
+
+div.log:hover {
+    opacity: 1;
+    transition: 0.25s;
+}
+
+div.log pre {
+
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: 20vh;
+    width: 40vw;
+
+}
+
+div.mobile {
+
+    display: none;
+
+    position: absolute;
+    bottom: 60px;
+
+    z-index: 998;
+    width: 100%;
+
+    /* display: flex; */
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 20px;
+
+}
+
+div.mobile button {
+
+    margin: 10px;
+    padding: 10px 15px;
+
+}
+
+div.mobile button.sml {
+    padding: 5px 8px;
+}
+
+div.mobile .lft-fwd {
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-flow: column wrap;
+
+}
