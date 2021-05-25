@@ -164,7 +164,7 @@ function CheckCollisions(interval) {
             for (var i = 0; i < things.length; ++i) {
                 var thing = things[i];
 
-                if (thing.type == thingType.torpedo && Collision(yShip, thing)) {
+                if (thing.type == thingType.torpedo && Collision(yShip, thing) && (thing.color != yShip.color)) {
                     RemoveThing(thing);
                     --thing.ship.nTorps;
                     Explode(yShip);
@@ -182,7 +182,7 @@ function CheckCollisions(interval) {
         if (eShip) {
             for (var i = 0; i < things.length; ++i) {
                 var thing = things[i];
-                if (thing.type == thingType.torpedo && Collision(eShip, thing)) {
+                if (thing.type == thingType.torpedo && Collision(eShip, thing) && (thing.color != eShip.color)) {
                     RemoveThing(thing);
                     --thing.ship.nTorps;
                     Explode(eShip);
