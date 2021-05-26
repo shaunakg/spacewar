@@ -98,8 +98,10 @@ function InitGame() {
     var nStars = Math.round(width * height * pStars);
     for (var i = 0; i < nStars; ++i)
         AddStar(acme.utils.RandInt(0, width), acme.utils.RandInt(0, height));
-    yShip = AddShip(width / 4, height - height / 4, 0, yColor);
-    eShip = AddShip(width - width / 4, height / 4, 180, eColor);
+
+    yShip = AddShip(width - width / 4 + Math.random()*600, height / 4 + Math.random()*600, 0, yColor);
+    eShip = AddShip(width - width / 4 + Math.random()*600, height / 4 + Math.random()*600, 180, eColor);
+
     restartTime = null;
 }
 
@@ -233,6 +235,11 @@ function CheckExpirations(interval) {
 }
 
 function EnemyStrategy() {
+
+	if (!usp.get("singleplayer")) {
+		return false;
+	}
+
     if (!yShip) {
         eShip.left = eShip.right = eShip.thrust = false;
         return;
@@ -504,6 +511,17 @@ var kcDown = "ArrowDown";
 var kcEscape = "Escape";
 
 function KeyHandler(e) {
+
+	function player(kc) {
+		if (usp.get("singleplayer")) {
+			return yShip;
+		} else {
+			return kc.includes("Arrow") ? eShip:yShip;
+		}
+	}	
+
+	console.dir(e)
+
     if (!e)
         e = window.event;
     var t = e.type;
@@ -522,17 +540,20 @@ function KeyHandler(e) {
         return;
     if (t == 'keydown') {
         switch (kc) {
-            case "Space":
+            case "KeyR":
                 Fire(yShip);
                 break;
+            case "Period":
+            	usp.get("singleplayer") || Fire(eShip);
+            	break;
             case "ArrowLeft": case "KeyA":
-                yShip.left = true;
+                player(kc).left = true;
                 break;
             case "ArrowRight": case "KeyD":
-                yShip.right = true;
+                player(kc).right = true;
                 break;
             case "ArrowUp": case "KeyW":
-                yShip.thrust = true;
+                player(kc).thrust = true;
                 break;
             case "Escape":
                 InfoOpen();
@@ -541,13 +562,13 @@ function KeyHandler(e) {
     } else if (t == 'keyup') {
         switch (kc) {
             case "ArrowLeft": case "KeyA":
-                yShip.left = false;
+                player(kc).left = false;
                 break;
             case "ArrowRight": case "KeyD":
-                yShip.right = false;
+                player(kc).right = false;
                 break;
             case "ArrowUp": case "KeyW":
-                yShip.thrust = false;
+                player(kc).thrust = false;
                 break;
         }
     }

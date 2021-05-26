@@ -34,13 +34,14 @@
     <div class="info" id="infoOpen" style="z-index: 1; width: 25em; display: none;">
       <h3 style="text-align: center">&#127756; Space War &#127756;</h3>
       <p>
-        Use the left/right/up arrow keys or W/A/S/D to move and the space bar to fire.
+        Use WASD and R to fire for the green ship, arrow keys and period (".") to fire for red.
       </p>
 
       <button onclick="InfoClose()" id=start>Start game</button><br/><br/>
       Or use (click one, then press start):
       <ul>
       	<li><a href="/">Normal mode</a></li>
+      	<li><a href="?singleplayer=1">Single player mode</a></li>
       	<li><a href="?noend=1">No-end mode (destroying the red ship will not end the game)</a></li>
       	<li><a href="?no_collisions=1">Infinite mode (no action will destroy any ship)</a></li>
       	<li><a href="?reduced_graphics=1">Reduced graphics mode</a></li>
@@ -62,7 +63,7 @@
 
     <script>
         document.body.onkeydown = (e) => {
-          if (e.ctrlKey && e.key == "l") {
+          if (e.ctrlKey && e.key == "l" && e.altKey) {
             document.getElementById("logBlock").style.display = (document.getElementById("logBlock").style.display == "block") ? "none":"block";
             alert("Log window has appeared in the bottom left, hover to reveal.")
             e.preventDefault();
