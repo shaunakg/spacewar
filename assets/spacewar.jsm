@@ -1,18 +1,22 @@
 'use strict';
+
+var usp = new URLSearchParams(location.search);
+var hard = !!usp.get("hard");
+
 var yColor = '#00ff00';
 var eColor = '#ff0000';
-var driverInterval = 20;
+var driverInterval = usp.get("reduced_graphics") ? 50:20;
 var pStars = .0001;
 var starSize = 1;
 var shipSize = 30;
 var torpedoSize = 5;
 var debrisSize = shipSize / 4;
-var turnRate = 850 / 4000;
-var acceleRate = 0.00050;
+var turnRate = (hard?450:850) / 4000;
+var acceleRate = hard?0.00025:0.00050;
 var torpDV = 0.15;
 var torpLifetime = 10000;
-var maxTorps = 50000;
-var eSpeedLimit = 0.08;
+var maxTorps = hard?5:50000;
+var eSpeedLimit = hard?0.12:0.08;
 var eFireDistance = 2000;
 var debrisTime = 300;
 var nDebris = 30;
@@ -50,6 +54,7 @@ var debrisKind = {
     bit: 2,
     crew: 3
 };
+
 debrisKind.first = debrisKind.line;
 debrisKind.last = debrisKind.crew;
 debrisKind.lastNoCrew = debrisKind.bit;
@@ -105,7 +110,7 @@ function Run() {
     if (prevTime !== null) {
         var interval = time - prevTime;
         if (restartTime !== null)
-            if (restartTime <= 0) {
+            if (restartTime <= 0 && !(usp.get("noend"))) {
                 while (things.length > 0)
                     RemoveThing(things[0]);
                 InitGame();
@@ -153,6 +158,10 @@ function Run() {
 }
 
 function CheckCollisions(interval) {
+
+	if (usp.get("no_collisions")) {
+		return false
+	}
 
     if (yShip && eShip && Collision(yShip, eShip)) {
         Explode(yShip);
